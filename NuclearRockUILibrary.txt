@@ -1561,6 +1561,70 @@ function lib:Window(text, preset, closebind)
             )
             Tab.CanvasSize = UDim2.new(0, 0, 0, TabLayout.AbsoluteContentSize.Y)
         end
+        function tabcontent:Titlebox(text, disapper, callback)
+	local Titlebox = Instance.new("Frame")
+	local TextboxCorner = Instance.new("UICorner")
+	local TextboxTitle = Instance.new("TextLabel")
+	local TextboxFrame = Instance.new("Frame")
+	local TextboxFrameCorner = Instance.new("UICorner")
+	local TextBox = Instance.new("TitleBox")
+
+	Titlebox.Name = "Textbox"
+	Titlebox.Parent = Tab
+	Titlebox.BackgroundColor3 = Color3.fromRGB(34, 34, 34)
+	Titlebox.ClipsDescendants = true
+	Titlebox.Position = UDim2.new(-0.541071415, 0, -0.532915354, 0)
+	Titlebox.Size = UDim2.new(0, 250, 0, 20)
+
+	TextboxCorner.CornerRadius = UDim.new(0, 5)
+	TextboxCorner.Name = "TextboxCorner"
+	TextboxCorner.Parent = Titlebox
+
+	TextboxTitle.Name = "TextboxTitle"
+	TextboxTitle.Parent = Titlebox
+	TextboxTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextboxTitle.BackgroundTransparency = 1.000
+	TextboxTitle.Position = UDim2.new(0.0358126722, 0, 0, 0)
+	TextboxTitle.Size = UDim2.new(0, 187, 0, 42)
+	TextboxTitle.Font = Enum.Font.Gotham
+	TextboxTitle.Text = text
+	TextboxTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextboxTitle.TextSize = 14.000
+	TextboxTitle.TextXAlignment = Enum.TextXAlignment.Left
+
+	TextboxFrame.Name = "TextboxFrame"
+	TextboxFrame.Parent = TextboxTitle
+	TextboxFrame.BackgroundColor3 = Color3.fromRGB(37, 37, 37)
+	TextboxFrame.Position = UDim2.new(1.28877008, 0, 0.214285716, 0)
+	TextboxFrame.Size = UDim2.new(0, 50, 0, 15)
+
+	TextboxFrameCorner.CornerRadius = UDim.new(0, 5)
+	TextboxFrameCorner.Name = "TextboxFrameCorner"
+	TextboxFrameCorner.Parent = TextboxFrame
+
+	TextBox.Parent = TextboxFrame
+	TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	TextBox.BackgroundTransparency = 1.000
+	TextBox.Size = UDim2.new(0, 100, 0, 23)
+	TextBox.Font = Enum.Font.Gotham
+	TextBox.Text = ""
+	TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+	TextBox.TextSize = 14.000
+
+	TextBox.FocusLost:Connect(
+		function(ep)
+			if ep then
+				if #TextBox.Text > 0 then
+					pcall(callback, TextBox.Text)
+					if disapper then
+						TextBox.Text = ""
+					end
+				end
+			end
+		end
+	)
+	Tab.CanvasSize = UDim2.new(0, 0, 0, TabLayout.AbsoluteContentSize.Y)
+end
         function tabcontent:Bind(text, keypreset, callback)
             local binding = false
             local Key = keypreset.Name
